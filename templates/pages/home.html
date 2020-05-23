@@ -26,8 +26,14 @@ Welcome to tweetnii
   xhr.open(method, url)
   xhr.onload = function(){
     const serverResponse = xhr.response
-    var listedItems = xhr.serverResponse.response
-    console.log(listedItems)
+    const listedItems = serverResponse.response
+    var finalTweetStr = ""
+    var i;
+    for(i=0;i<listedItems.lenght; i++){
+      console.log(i)
+      // console.log(listedItems)
+    }
+    
   }
   xhr.send()
 </script>
