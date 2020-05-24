@@ -27,7 +27,10 @@ SECRET_KEY = 'b7l9a)v2&(j%abhl9jhmtmh%1%#oc0*yeg$aljy)-k+=6uym(p'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+LOGIN_URL = "/login"
 
+MAX_TWEET_LENGTH = 240
+TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet"]
 
 # Application definition
 
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'tweets',
+    'accounts',
+    'profiles',
 ]
 
 MIDDLEWARE = [

@@ -1,43 +1,19 @@
-from django.shortcuts import render
+import random
+from django.conf import settings
 from django.http import HttpResponse, Http404, JsonResponse
-from .models import Tweet
+from django.shortcuts import render, redirect
+from django.utils.http import is_safe_url
 
 
-from .forms import TweetForm
+ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
-def home_view(request):
-    return render(request, "pages/home.html", context={}, status=200)
+# Create your views here.
+def home_view(request, *args, **kwargs):
+    return render(request, "pages/feed.html")
 
-def tweet_create_view(request, *args, **kwargs):
-    form = TweetForm(request.POST or None)
-    if form.is_valid():
-        obj = form.save(commit=False)
-        obj.save()
-        form = TweetForm()
-    return render(request, "components/forms.html", context={"form":form})
+def tweets_list_view(request, *args, **kwargs):
+    return render(request, "tweets/list.html")
 
-
-def tweet_list_view(request, *args, **kwargs):
-    qs = Tweet.objects.all()    
-    tweet_list = [{"id":x.id, "content":x.content} for x in qs]
-    data = {
-        "response": tweet_list
-    }
-    return JsonResponse(data)
-
-def tweet_detail_view(request, tweet_id, *args, **kwargs):
-    data = {
-        'id': tweet_id,
-    }
-    status = 200
-    try:   
-        obj = Tweet.objects.get(id= tweet_id)
-        data['content']= obj.content
-    except:
-        data['message']= "Not found"
-        status = 404
-        
-
-   
-    return JsonResponse(data, status=status)
-
+def tweets_detail_view(request, tweet_id, *args, **kwargs):
+    return render(request, "tweets/detail.html", context={"tweet_id": tweet_id})
+    
